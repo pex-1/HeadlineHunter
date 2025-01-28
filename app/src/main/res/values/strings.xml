@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">HeadlineHunter</string>
+
+    <string name="error_disk_full">Failed to save the item because your disk is full.</string>
+    <string name="error_no_internet">No network connection.</string>
+    <string name="rss_parsing_error">Coundn\'t pars data.</string>
+    <string name="error_unknown">An unknown error occurred.</string>
+    <string name="clear_rss_link">Clear RSS link</string>
+    <string name="paste_rss_link">Paste RSS link</string>
+    <string name="already_subscribed">Already subscribed!</string>
+    <string name="notification_feed">Notification Feed</string>
+    <string name="go_back">Go back</string>
+    <string name="channel_image">Channel image</string>
+    <string name="headlinehunter">HeadlineHunter</string>
+    <string name="article_image">Article image</string>
+    <string name="rss_icon">RSS icon</string>
+    <string name="add_new_rss_feed">Add New RSS Feed</string>
+    <string name="enter_rss_feed_url">Enter RSS feed URL</string>
+    <string name="remove">Remove %1$s?</string>
+    <string name="search">Search</string>
+    <string name="subscribe">Subscribe</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="permission_permanently_declined">It seems you permanently declined notification permission. Do you want to go to settings to enable it?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="empty_state_message">It looks like you haven’t added any RSS feeds yet. Subscribe to your favorite feeds to start exploring fresh content!</string>
+    <string name="no_data_found">No data found</string>
+</resources>
