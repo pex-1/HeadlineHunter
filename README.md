@@ -4,12 +4,12 @@
 
 <br><br/>
 ## Screenshots
-<img src="readme/screenshots/preview.png" alt="HeadlineHunter preview" />
+<img src="preview.png" alt="HeadlineHunter preview" />
 
 <br><br/>
 ## Demo
 <p align="center">
-<img height="600" src="readme/screenshots/demo.gif" alt="HeadlineHunter demo" />
+<img height="600" src="demo.gif" alt="HeadlineHunter demo" />
 </p>
 
 
