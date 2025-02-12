@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -95,82 +96,89 @@ fun DetailsScreen(
                 HeadlineHunterToolbar(showBackButton = true, menuItems = listOf(), onBackClick = {
                     onAction(DetailsAction.OnBackClick)
                 })
+            }
 
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(top = 290.dp)
-                        .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
-                        .background(MaterialTheme.colorScheme.surface)
-                ) {
-                    Column(Modifier.padding(16.dp)) {
-
-                        Row(
-                            modifier = Modifier
-                                .height(IntrinsicSize.Min)
-                        ) {
-
-                            VerticalDivider(
-                                modifier = Modifier.sharedElement(
-                                    state = rememberSharedContentState(key = state.article.id),
-                                    animatedVisibilityScope = animatedVisibilityScope,
-                                    boundsTransform = { _, _ ->
-                                        tween(durationMillis = Constants.DETAILS_IMAGE_DELAY)
-                                    }
-                                ),
-                                thickness = 3.dp, color = MaterialTheme.colorScheme.primary
-                            )
-                            Text(
-                                modifier = Modifier
-                                    .padding(start = 8.dp)
-                                    .sharedElement(
-                                        state = rememberSharedContentState(key = "${state.article.id}/title"),
-                                        animatedVisibilityScope = animatedVisibilityScope,
-                                        boundsTransform = { _, _ ->
-                                            tween(durationMillis = Constants.DETAILS_IMAGE_DELAY)
-                                        }
-                                    ),
-                                text = state.article.title,
-                                style = MaterialTheme.typography.bodyLarge
-                            )
+            Box(
+                modifier = Modifier
+                    .sharedElement(
+                        state = rememberSharedContentState(key = "${state.article.id}/container"),
+                        animatedVisibilityScope = animatedVisibilityScope,
+                        boundsTransform = { _, _ ->
+                            tween(durationMillis = Constants.DETAILS_IMAGE_DELAY)
                         }
+                    )
+                    .fillMaxSize()
+                    .offset(y = (-10).dp)
+                    .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
+                    .background(MaterialTheme.colorScheme.surface)
+            ) {
+                Column(Modifier.padding(16.dp)) {
 
+                    Row(
+                        modifier = Modifier
+                            .height(IntrinsicSize.Min)
+                    ) {
+
+                        VerticalDivider(
+                            modifier = Modifier.sharedElement(
+                                state = rememberSharedContentState(key = state.article.id),
+                                animatedVisibilityScope = animatedVisibilityScope,
+                                boundsTransform = { _, _ ->
+                                    tween(durationMillis = Constants.DETAILS_IMAGE_DELAY)
+                                }
+                            ),
+                            thickness = 3.dp, color = MaterialTheme.colorScheme.primary
+                        )
                         Text(
                             modifier = Modifier
-                                .padding(vertical = 24.dp)
+                                .padding(start = 8.dp)
                                 .sharedElement(
-                                    state = rememberSharedContentState(key = "${state.article.id}/description"),
+                                    state = rememberSharedContentState(key = "${state.article.id}/title"),
                                     animatedVisibilityScope = animatedVisibilityScope,
                                     boundsTransform = { _, _ ->
                                         tween(durationMillis = Constants.DETAILS_IMAGE_DELAY)
                                     }
                                 ),
-                            text = state.article.description,
-                            style = MaterialTheme.typography.bodyMedium
+                            text = state.article.title,
+                            style = MaterialTheme.typography.bodyLarge
                         )
-
-                        TextButton(
-                            onClick = {
-                                val intent =
-                                    Intent(Intent.ACTION_VIEW, Uri.parse(state.article.link))
-                                context.startActivity(intent)
-                            },
-                            contentPadding = PaddingValues()
-                        ) {
-                            Text(
-                                text = "Read full article",
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.tertiary,
-                                fontWeight = FontWeight.Medium
-                            )
-                            Icon(
-                                imageVector = ArrowForwardIcon,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.tertiary
-                            )
-                        }
-
                     }
+
+                    Text(
+                        modifier = Modifier
+                            .padding(vertical = 24.dp)
+                            .sharedElement(
+                                state = rememberSharedContentState(key = "${state.article.id}/description"),
+                                animatedVisibilityScope = animatedVisibilityScope,
+                                boundsTransform = { _, _ ->
+                                    tween(durationMillis = Constants.DETAILS_IMAGE_DELAY)
+                                }
+                            ),
+                        text = state.article.description,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+
+                    TextButton(
+                        onClick = {
+                            val intent =
+                                Intent(Intent.ACTION_VIEW, Uri.parse(state.article.link))
+                            context.startActivity(intent)
+                        },
+                        contentPadding = PaddingValues()
+                    ) {
+                        Text(
+                            text = "Read full article",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.tertiary,
+                            fontWeight = FontWeight.Medium
+                        )
+                        Icon(
+                            imageVector = ArrowForwardIcon,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.tertiary
+                        )
+                    }
+
                 }
             }
         }

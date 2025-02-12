@@ -4,5 +4,4 @@ interface SyncFeedScheduler {
 
     fun scheduleSyncFeedWorker(interval: Long)
     fun cancelSyncFeedWorker()
-
 }

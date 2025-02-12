@@ -3,7 +3,7 @@
 
     <string name="error_disk_full">Failed to save the item because your disk is full.</string>
     <string name="error_no_internet">No network connection.</string>
-    <string name="rss_parsing_error">Coundn\'t pars data.</string>
+    <string name="rss_parsing_error">Couldn\'t parse data.</string>
     <string name="error_unknown">An unknown error occurred.</string>
     <string name="clear_rss_link">Clear RSS link</string>
     <string name="paste_rss_link">Paste RSS link</string>
@@ -11,7 +11,7 @@
     <string name="notification_feed">Notification Feed</string>
     <string name="go_back">Go back</string>
     <string name="channel_image">Channel image</string>
-    <string name="headlinehunter">HeadlineHunter</string>
+    <string name="headline_hunter">HeadlineHunter</string>
     <string name="article_image">Article image</string>
     <string name="rss_icon">RSS icon</string>
     <string name="add_new_rss_feed">Add New RSS Feed</string>

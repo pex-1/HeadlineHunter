@@ -49,6 +49,7 @@ class FeedNotificationService(private val context: Context) {
             .setContentTitle("${channel.title} - $numberOfArticles new")
             .setContentText(article.title)
             .setContentIntent(activityPendingIntent)
+            .setAutoCancel(true)
             .build()
 
         notificationManager.notify(1, notification)

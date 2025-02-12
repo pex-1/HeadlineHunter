@@ -68,7 +68,7 @@ fun UnreadScreen(
 
     Column {
         HeadlineHunterToolbar(
-            title = stringResource(R.string.headlinehunter),
+            title = stringResource(R.string.headline_hunter),
             onMenuItemClick = {
                 if (it == MenuAction.ADD_RSS_FEEDS) {
                     onAction(UnreadAction.OnAddRssFeedClick)

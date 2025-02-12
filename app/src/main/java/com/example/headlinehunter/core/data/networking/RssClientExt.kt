@@ -27,6 +27,7 @@ suspend inline fun safeCall(execute: () -> RssChannel): Result<RssChannel, DataE
         e.printStackTrace()
         return Result.Error(DataError.Network.RSS_PARSING_EXCEPTION)
     } catch (e: Exception) {
+        e.printStackTrace()
         coroutineContext.ensureActive()
         return Result.Error(DataError.Network.UNKNOWN)
     }

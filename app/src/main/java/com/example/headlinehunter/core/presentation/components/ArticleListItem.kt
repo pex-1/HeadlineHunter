@@ -55,6 +55,13 @@ fun ArticleListItem(
     with(sharedTransitionScope) {
         Row(
             modifier = modifier
+                .sharedElement(
+                    state = rememberSharedContentState(key = "$articleId/container"),
+                    animatedVisibilityScope = animatedVisibilityScope,
+                    boundsTransform = { _, _ ->
+                        tween(durationMillis = Constants.DETAILS_IMAGE_DELAY)
+                    }
+                )
                 .alpha(if (isArticleRead) 0.5f else 1f)
                 .clickable(onClick = {
                     onArticleClick()

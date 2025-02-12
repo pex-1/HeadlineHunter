@@ -35,7 +35,6 @@ import com.example.headlinehunter.ui.settings.navigation.navigateToSettings
 import com.example.headlinehunter.ui.unread.navigation.navigateToUnread
 import kotlin.reflect.KClass
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HeadlineHunterBottomBar(
@@ -70,7 +69,7 @@ fun HeadlineHunterBottomBar(
                         val isSelected = currentDestination.isRouteInHierarchy(destination.route)
 
                         NavigationBarItem(
-                            selected = isSelected == true,
+                            selected = isSelected,
                             onClick = {
                                 navigateToTopLevelDestination(destination, navController)
                             },

@@ -77,7 +77,7 @@ fun SettingsScreen(
     }
 
     Column {
-        HeadlineHunterToolbar(title = stringResource(R.string.headlinehunter), menuItems = listOf())
+        HeadlineHunterToolbar(title = stringResource(R.string.headline_hunter), menuItems = listOf())
 
         SettingsSwitchItem(
             action = "Notifications",

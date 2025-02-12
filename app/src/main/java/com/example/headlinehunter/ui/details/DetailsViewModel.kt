@@ -15,13 +15,14 @@ class DetailsViewModel(
     private val _state = MutableStateFlow(DetailsState())
     val state = _state.asStateFlow()
 
-
     fun getArticleById(articleId: Int) {
         viewModelScope.launch {
             _state.update {
                 it.copy(article = repository.getArticleById(articleId))
             }
-            repository.updateArticle(state.value.article.copy(isArticleRead = true))
+            if (state.value.article.isArticleRead.not()) {
+                repository.updateArticle(state.value.article.copy(isArticleRead = true))
+            }
         }
     }
 

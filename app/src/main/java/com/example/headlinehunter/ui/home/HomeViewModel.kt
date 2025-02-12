@@ -8,8 +8,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -30,23 +29,20 @@ class HomeViewModel(
             _state.update {
                 it.copy(channels = channels)
             }
+            refreshArticles(channels)
+
         }.launchIn(viewModelScope)
 
-        repository.getChannels().onEach {
-            refreshArticles(it)
-        }.launchIn(viewModelScope)
-
-
-        viewModelScope.launch {
-            val selectedChannels = repository.getChannels().map { it.filter { it.isSelected } }
-
-            selectedChannels.flatMapLatest { repository.getArticles(it.map { it.id }) }
-                .collectLatest { articles ->
-                    _state.update {
-                        it.copy(articles = articles)
-                    }
-                }
-        }
+        _state
+            .distinctUntilChangedBy { it.channels }
+            .map {
+                repository.getArticles(it.channels.filter { it.isSelected }.map { it.id })
+                    .onEach { articles ->
+                        _state.update {
+                            it.copy(articles = articles)
+                        }
+                    }.launchIn(viewModelScope)
+            }.launchIn(viewModelScope)
     }
 
     private suspend fun refreshArticles(channels: List<Channel>) {

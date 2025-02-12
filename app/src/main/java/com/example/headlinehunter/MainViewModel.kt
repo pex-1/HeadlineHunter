@@ -22,7 +22,7 @@ class MainViewModel(
     )
 
     init {
-        viewModelScope.launch{
+        viewModelScope.launch {
             repository.notificationsEnabled().collectLatest { enabled ->
                 if (enabled) {
                     syncFeedScheduler.scheduleSyncFeedWorker(15L)
