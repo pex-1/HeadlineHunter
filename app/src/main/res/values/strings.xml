@@ -26,4 +26,7 @@
     <string name="no">No</string>
     <string name="empty_state_message">It looks like you haven’t added any RSS feeds yet. Subscribe to your favorite feeds to start exploring fresh content!</string>
     <string name="no_data_found">No data found</string>
+    <string name="notifications">Notifications</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="collapse_channels">Collapse Channels</string>
 </resources>
