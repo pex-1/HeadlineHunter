@@ -80,7 +80,7 @@ fun SettingsScreen(
         HeadlineHunterToolbar(title = stringResource(R.string.headline_hunter), menuItems = listOf())
 
         SettingsSwitchItem(
-            action = "Notifications",
+            action = stringResource(R.string.notifications),
             icon = NotificationIcon,
             checked = state.notificationsEnabled
         ) {
@@ -97,7 +97,7 @@ fun SettingsScreen(
         }
 
         SettingsSwitchItem(
-            action = "Dark Mode",
+            action = stringResource(R.string.dark_mode),
             icon = DarkModeIcon,
             checked = state.darkModeEnabled
         ) {

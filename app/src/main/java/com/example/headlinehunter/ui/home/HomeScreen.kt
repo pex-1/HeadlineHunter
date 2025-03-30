@@ -99,7 +99,7 @@ fun HomeScreen(
 
             val menuItems = listOf(
                 MenuItem(
-                    ImageVector.vectorResource(state.collapseMenuIcon),
+                    ImageVector.vectorResource(if(state.collapseFeedSelection) R.drawable.expand else R.drawable.collapse),
                     MenuAction.COLLAPSE_FEED_SELECTION
                 ),
                 MenuItem(RssIcon, MenuAction.ADD_RSS_FEEDS)
@@ -114,9 +114,7 @@ fun HomeScreen(
                         }
 
                         MenuAction.COLLAPSE_FEED_SELECTION -> {
-                            val collapse = state.collapseFeedSelection.not()
-                            val icon = if (collapse) R.drawable.expand else R.drawable.collapse
-                            onAction(HomeAction.OnCollapseChannelsClick(collapse, icon))
+                            onAction(HomeAction.OnCollapseChannelsClick)
                         }
 
                         else -> {}
@@ -165,14 +163,11 @@ fun HomeScreen(
                 )
             }
 
-
-            val pullToRefreshState = rememberPullToRefreshState()
-
             PullToRefreshBox(
                 modifier = Modifier
                     .padding(horizontal = 8.dp)
                     .fillMaxWidth(),
-                state = pullToRefreshState,
+                state = rememberPullToRefreshState(),
                 isRefreshing = state.isRefreshing,
                 onRefresh = {
                     onAction(HomeAction.OnPullToRefresh)

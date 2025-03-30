@@ -15,7 +15,10 @@ import androidx.compose.material.icons.filled.Newspaper
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.RssFeed
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
+import com.example.headlinehunter.R
 
 val HomeIcon: ImageVector
     get() = Icons.Filled.Home
@@ -59,3 +62,6 @@ val ArrowForwardIcon: ImageVector
 val DeleteIcon: ImageVector
     get() = Icons.Filled.Delete
 
+val CollapseIcon: ImageVector
+    @Composable
+    get() = ImageVector.vectorResource(id = R.drawable.collapse)

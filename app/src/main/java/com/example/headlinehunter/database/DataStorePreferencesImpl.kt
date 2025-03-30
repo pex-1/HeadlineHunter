@@ -20,6 +20,7 @@ class DataStorePreferencesImpl(
     companion object {
         val notificationsKey = booleanPreferencesKey("notifications_key")
         val darkModeKey = booleanPreferencesKey("dark_mode_key")
+        val collapseChannelsKey = booleanPreferencesKey("collapse_channels_key")
     }
 
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore("userInfo")
@@ -34,6 +35,20 @@ class DataStorePreferencesImpl(
         context.dataStore.edit { pref ->
             pref[darkModeKey] = isDarkMode
         }
+    }
+
+    override suspend fun setCollapseChannels(collapse: Boolean) {
+        context.dataStore.edit { pref ->
+            pref[collapseChannelsKey] = collapse
+        }
+    }
+
+    override fun getCollapseChannels(): Flow<Boolean> {
+        return context.dataStore.data
+            .catchAndHandleError()
+            .map { pref ->
+                pref[collapseChannelsKey] ?: false
+            }
     }
 
     override fun notificationsEnabled(): Flow<Boolean> {

@@ -28,8 +28,10 @@ interface RssFeedRepository {
     suspend fun fetchArticles(channelLink: String, channelId: Int): Result<Int, DataError>
     suspend fun removeArticle(article: Article)
 
-    suspend fun updateNotifications(notificationsEnabled: Boolean)
+    suspend fun setNotifications(notificationsEnabled: Boolean)
     suspend fun setTheme(isDarkMode: Boolean)
-    fun getTheme() : Flow<Boolean>
+    suspend fun setCollapseChannels(collapse: Boolean)
+    fun getTheme(): Flow<Boolean>
+    fun getCollapseChannels(): Flow<Boolean>
     fun notificationsEnabled(): Flow<Boolean>
 }

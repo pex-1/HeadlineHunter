@@ -4,8 +4,15 @@ import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContent
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -19,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
@@ -50,6 +58,7 @@ fun HeadlineHunterBottomBar(
     }
 
     Scaffold(
+        contentWindowInsets = WindowInsets.safeContent,
         bottomBar = {
             AnimatedVisibility(
                 visible = showBars,
@@ -92,8 +101,13 @@ fun HeadlineHunterBottomBar(
     ) { innerPadding ->
         NavigationRoot(
             navController,
-            if (showBars) Modifier.padding(bottom = innerPadding.calculateBottomPadding())
-            else Modifier.navigationBarsPadding()
+            if (showBars) Modifier.padding(innerPadding.copy(top = 0.dp))
+            else Modifier.padding(
+                innerPadding.copy(
+                    bottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding(),
+                    top = 0.dp
+                )
+            )
         )
     }
 }

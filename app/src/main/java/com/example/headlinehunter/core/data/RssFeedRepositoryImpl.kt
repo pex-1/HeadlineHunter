@@ -107,7 +107,7 @@ class RssFeedRepositoryImpl(
         localArticleDataSource.removeArticle(article)
     }
 
-    override suspend fun updateNotifications(notificationsEnabled: Boolean) {
+    override suspend fun setNotifications(notificationsEnabled: Boolean) {
         dataStore.updateNotifications(notificationsEnabled)
     }
 
@@ -115,8 +115,16 @@ class RssFeedRepositoryImpl(
         dataStore.setTheme(isDarkMode)
     }
 
+    override suspend fun setCollapseChannels(collapse: Boolean) {
+        dataStore.setCollapseChannels(collapse)
+    }
+
     override fun getTheme(): Flow<Boolean> {
         return dataStore.getTheme()
+    }
+
+    override fun getCollapseChannels(): Flow<Boolean> {
+        return dataStore.getCollapseChannels()
     }
 
     override fun notificationsEnabled(): Flow<Boolean> {

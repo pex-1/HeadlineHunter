@@ -25,6 +25,12 @@ class HomeViewModel(
     val state = _state.asStateFlow()
 
     init {
+        repository.getCollapseChannels().onEach { collapsed ->
+            _state.update {
+                it.copy(collapseFeedSelection = collapsed)
+            }
+        }.launchIn(viewModelScope)
+
         repository.getChannels().onEach { channels ->
             _state.update {
                 it.copy(channels = channels)
@@ -33,15 +39,25 @@ class HomeViewModel(
 
         }.launchIn(viewModelScope)
 
-        _state
+        state
             .distinctUntilChangedBy { it.channels }
             .map {
-                repository.getArticles(it.channels.filter { it.isSelected }.map { it.id })
-                    .onEach { articles ->
-                        _state.update {
-                            it.copy(articles = articles)
-                        }
-                    }.launchIn(viewModelScope)
+                val selectedChannels = it.channels.filter { it.isSelected }
+                if (selectedChannels.isNotEmpty()) {
+                    repository.getArticles(selectedChannels.map { it.id })
+                        .onEach { articles ->
+                            if (articles.isNotEmpty()) {
+                                _state.update {
+                                    it.copy(articles = articles)
+                                }
+                            }
+                        }.launchIn(viewModelScope)
+                }
+                else {
+                    _state.update {
+                        it.copy(articles = emptyList())
+                    }
+                }
             }.launchIn(viewModelScope)
     }
 
@@ -94,11 +110,9 @@ class HomeViewModel(
             }
 
             is HomeAction.OnCollapseChannelsClick -> {
-                _state.update {
-                    it.copy(
-                        collapseFeedSelection = action.collapse,
-                        collapseMenuIcon = action.icon
-                    )
+                val channelsCollapsed = _state.value.collapseFeedSelection.not()
+                viewModelScope.launch {
+                    repository.setCollapseChannels(channelsCollapsed)
                 }
             }
 

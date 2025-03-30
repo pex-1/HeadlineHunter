@@ -10,5 +10,5 @@ sealed interface HomeAction {
     data class OnChannelClick(val channel: Channel) : HomeAction
     data object OnPullToRefresh : HomeAction
     data object OnAddRssFeedClick : HomeAction
-    data class OnCollapseChannelsClick(val collapse: Boolean, val icon: Int) : HomeAction
+    data object OnCollapseChannelsClick : HomeAction
 }

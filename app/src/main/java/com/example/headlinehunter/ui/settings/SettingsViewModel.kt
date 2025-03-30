@@ -35,7 +35,7 @@ class SettingsViewModel(
         when (action) {
             is SettingsAction.OnEnableNotifications -> {
                 viewModelScope.launch {
-                    repository.updateNotifications(state.value.notificationsEnabled.not())
+                    repository.setNotifications(state.value.notificationsEnabled.not())
                 }
             }
 
