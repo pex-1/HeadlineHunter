@@ -8,7 +8,6 @@ import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,7 +25,6 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -39,9 +37,9 @@ import com.example.headlinehunter.core.domain.util.getDateFromMills
 import com.example.headlinehunter.core.presentation.components.ArticleListItem
 import com.example.headlinehunter.core.presentation.components.EmptyState
 import com.example.headlinehunter.core.presentation.components.HeadlineHunterToolbar
-import com.example.headlinehunter.core.presentation.components.LoadingState
 import com.example.headlinehunter.core.presentation.components.MenuAction
 import com.example.headlinehunter.core.presentation.components.MenuItem
+import com.example.headlinehunter.core.presentation.components.ShimmerListItem
 import com.example.headlinehunter.core.presentation.util.RssIcon
 import com.example.headlinehunter.ui.home.components.ChannelSelect
 import com.example.headlinehunter.ui.theme.HeadlineHunterTheme
@@ -86,43 +84,41 @@ fun HomeScreen(
     onAction: (HomeAction) -> Unit
 ) {
 
-    if (state.isLoadingData) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            LoadingState(modifier = Modifier.align(Alignment.Center))
-        }
-    } else {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
-        ) {
 
-            val menuItems = listOf(
-                MenuItem(
-                    ImageVector.vectorResource(if(state.collapseFeedSelection) R.drawable.expand else R.drawable.collapse),
-                    MenuAction.COLLAPSE_FEED_SELECTION
-                ),
-                MenuItem(RssIcon, MenuAction.ADD_RSS_FEEDS)
-            )
-            HeadlineHunterToolbar(
-                title = stringResource(R.string.headline_hunter),
-                menuItems = menuItems,
-                onMenuItemClick = { action ->
-                    when (action) {
-                        MenuAction.ADD_RSS_FEEDS -> {
-                            onAction(HomeAction.OnAddRssFeedClick)
-                        }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+    ) {
 
-                        MenuAction.COLLAPSE_FEED_SELECTION -> {
-                            onAction(HomeAction.OnCollapseChannelsClick)
-                        }
-
-                        else -> {}
+        val menuItems = listOf(
+            MenuItem(
+                ImageVector.vectorResource(if (state.collapseFeedSelection) R.drawable.expand else R.drawable.collapse),
+                MenuAction.COLLAPSE_FEED_SELECTION
+            ),
+            MenuItem(RssIcon, MenuAction.ADD_RSS_FEEDS)
+        )
+        HeadlineHunterToolbar(
+            title = stringResource(R.string.headline_hunter),
+            menuItems = menuItems,
+            onMenuItemClick = { action ->
+                when (action) {
+                    MenuAction.ADD_RSS_FEEDS -> {
+                        onAction(HomeAction.OnAddRssFeedClick)
                     }
-                })
-            if (state.channels.isEmpty() && state.isRefreshing.not()) {
-                EmptyState()
-            }
+
+                    MenuAction.COLLAPSE_FEED_SELECTION -> {
+                        onAction(HomeAction.OnCollapseChannelsClick)
+                    }
+
+                    else -> {}
+                }
+            })
+        if (state.channels.isEmpty() && state.isRefreshing.not() && state.isLoadingData.not()) {
+            EmptyState()
+        }
+
+        ShimmerListItem(state.isLoadingData) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -206,7 +202,6 @@ fun HomeScreen(
             }
         }
     }
-
 }
 
 @OptIn(ExperimentalSharedTransitionApi::class)
@@ -216,7 +211,8 @@ fun HomeScreenPreview() {
     HeadlineHunterTheme {
         SharedTransitionLayout {
             AnimatedVisibility(visible = true) {
-                HomeScreen(HomeState(), animatedVisibilityScope = this,
+                HomeScreen(
+                    HomeState(), animatedVisibilityScope = this,
                     sharedTransitionScope = this@SharedTransitionLayout, {})
             }
         }
