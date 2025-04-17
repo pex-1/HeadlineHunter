@@ -64,13 +64,15 @@ fun HomeScreenRoot(
         animatedVisibilityScope = animatedVisibilityScope,
         sharedTransitionScope = sharedTransitionScope,
         onAction = { action ->
-            when (action) {
-                is HomeAction.OnBackClick -> onBackClick()
-                is HomeAction.OnArticleClick -> onArticleClick(action.articleId)
-                is HomeAction.OnAddRssFeedClick -> onAddRssFeedClick()
-                else -> {}
+            if (state.isLoadingData.not()) {
+                when (action) {
+                    is HomeAction.OnBackClick -> onBackClick()
+                    is HomeAction.OnArticleClick -> onArticleClick(action.articleId)
+                    is HomeAction.OnAddRssFeedClick -> onAddRssFeedClick()
+                    else -> {}
+                }
+                viewModel.onAction(action)
             }
-            viewModel.onAction(action)
         }
     )
 }
@@ -83,7 +85,6 @@ fun HomeScreen(
     sharedTransitionScope: SharedTransitionScope,
     onAction: (HomeAction) -> Unit
 ) {
-
 
     Column(
         modifier = Modifier
