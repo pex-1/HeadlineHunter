@@ -29,7 +29,9 @@
 <br><br/>
 ## Demo
 <p align="center">
-<img height="600" src="demo.gif" alt="HeadlineHunter demo" />
+<img height="600" src="demo1.gif" alt="HeadlineHunter demo" />
+  <br><br/>
+<img height="600" src="demo2.gif" alt="HeadlineHunter demo" />
 </p>
 
 
