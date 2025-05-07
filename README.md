@@ -44,6 +44,6 @@
 - Room
 - Coroutines
 - Flow
-- RssParser
 - WorkManager
 - Jetpack Navigation
+- RssParser
