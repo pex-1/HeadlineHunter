@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.headlinehunter.core.domain.RssFeedRepository
 import com.example.headlinehunter.core.domain.channel.Channel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,7 +15,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class HomeViewModel(
     private val repository: RssFeedRepository
 ) : ViewModel() {
@@ -41,14 +39,14 @@ class HomeViewModel(
 
         state
             .distinctUntilChangedBy { it.channels }
-            .map {
-                val selectedChannels = it.channels.filter { it.isSelected }
+            .map { state ->
+                val selectedChannels = state.channels.filter { channel -> channel.isSelected }
                 if (selectedChannels.isNotEmpty()) {
-                    repository.getArticles(selectedChannels.map { it.id })
-                        .onEach { articles ->
-                            if (articles.isNotEmpty()) {
+                    repository.getArticles(selectedChannels.map { channel -> channel.id })
+                        .onEach { article ->
+                            if (article.isNotEmpty()) {
                                 _state.update {
-                                    it.copy(articles = articles)
+                                    it.copy(articles = article)
                                 }
                             }
                         }.launchIn(viewModelScope)

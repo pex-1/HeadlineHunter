@@ -15,7 +15,7 @@ class SyncFeedWorker(
     private val repository: RssFeedRepository
 ) : CoroutineWorker(context, params) {
 
-    val notificationService = FeedNotificationService(context)
+    private val notificationService = FeedNotificationService(context)
 
     override suspend fun doWork(): Result {
         val channels = repository.getSubscribedChannels()
@@ -31,7 +31,7 @@ class SyncFeedWorker(
         return Result.success()
     }
 
-    suspend fun Channel.feedSync(): Int {
+    private suspend fun Channel.feedSync(): Int {
         return when (val result = repository.fetchArticles(this.link, this.id)) {
             is Error -> 0
 
